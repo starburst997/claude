@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Auto Version - Automatic Semantic Versioning for GitHub Actions
+    </title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+        min-height: 100vh;
+      }
+
+      .hero-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+        z-index: -1;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header {
+        padding: 2rem 0;
+        text-align: center;
+        color: white;
+      }
+
+      .hero {
+        padding: 4rem 0 6rem;
+        text-align: center;
+        color: white;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.9));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .tagline {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.875rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+      }
+
+      .btn-secondary:hover {
+        background: white;
+        color: #6366f1;
+      }
+
+      .features-section {
+        background: white;
+        border-radius: 20px 20px 0 0;
+        padding: 5rem 0;
+        margin-top: -2rem;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-top: 3rem;
+      }
+
+      .feature {
+        text-align: center;
+        padding: 1.5rem;
+      }
+
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 1.5rem;
+        color: white;
+      }
+
+      .feature h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+
+      .feature p {
+        color: #666;
+        line-height: 1.7;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 1rem;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .journey-section {
+        background: #f8f9fa;
+        padding: 4rem 0;
+      }
+
+      .journey-flow {
+        max-width: 900px;
+        margin: 3rem auto 0;
+        padding: 0 2rem;
+      }
+
+      .journey-step {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        background: white;
+        padding: 1.5rem 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      .step-number {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+
+      .step-content {
+        flex: 1;
+      }
+
+      .step-action {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.25rem;
+      }
+
+      .step-result {
+        color: #666;
+        font-size: 0.95rem;
+      }
+
+      .step-version {
+        display: inline-block;
+        background: #1e1e1e;
+        color: #4ec9b0;
+        padding: 0.3rem 0.8rem;
+        border-radius: 5px;
+        font-family: "Monaco", monospace;
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+      }
+
+      .usage-section {
+        padding: 5rem 0;
+        background: white;
+      }
+
+      .workflow-examples {
+        margin-top: 3rem;
+      }
+
+      .workflow-example {
+        margin-bottom: 3rem;
+      }
+
+      .workflow-example h3 {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .code-block {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 10px;
+        overflow-x: auto;
+        margin-top: 1rem;
+        font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .code-block .comment {
+        color: #6a9955;
+      }
+
+      .code-block .keyword {
+        color: #c586c0;
+      }
+
+      .code-block .string {
+        color: #ce9178;
+      }
+
+      .reference-section {
+        background: #f8f9fa;
+        padding: 4rem 0;
+      }
+
+      .reference-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .reference-card {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .reference-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: #333;
+        border-bottom: 3px solid #a78bfa;
+        padding-bottom: 0.5rem;
+      }
+
+      .param-item {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .param-item:last-child {
+        border-bottom: none;
+      }
+
+      .param-name {
+        font-family: "Monaco", monospace;
+        font-size: 0.95rem;
+        color: #6366f1;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .param-desc {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 0.25rem;
+      }
+
+      .param-default {
+        font-size: 0.85rem;
+        color: #999;
+        font-style: italic;
+      }
+
+      footer {
+        background: #f8f9fa;
+        padding: 3rem 0;
+        text-align: center;
+        color: #666;
+      }
+
+      footer a {
+        color: #6366f1;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        .tagline {
+          font-size: 1.2rem;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .journey-step {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .reference-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero-background"></div>
+
+    <header>
+      <div class="container">
+        <nav>
+          <a
+            href="https://github.com/starburst997/auto-version"
+            class="btn btn-secondary"
+          >
+            View on GitHub →
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <h1>Auto Version</h1>
+        <p class="tagline">
+          Zero-configuration semantic versioning for GitHub Actions workflows
+        </p>
+      </div>
+    </section>
+
+    <section class="features-section">
+      <div class="container">
+        <h2 class="section-title">What Does It Do?</h2>
+        <p class="section-subtitle">
+          Automatically creates version tags based on your workflow context
+        </p>
+
+        <div class="features">
+          <div class="feature">
+            <div class="feature-icon">🎯</div>
+            <h3>Auto-Detection</h3>
+            <p>
+              Detects if you're pushing to main branch, dev branch, or creating
+              a PR and generates the right version tag automatically
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">🔢</div>
+            <h3>Smart Versioning</h3>
+            <p>
+              Dev branch increments patch (v1.2.3-dev), PRs get transient tags
+              (v0.0.0-rc.1 or v0.0.0-pr-123.1), main branch creates production
+              versions (v1.2.3)
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">🏷️</div>
+            <h3>Git Tag Based</h3>
+            <p>
+              Uses existing git tags to calculate versions. No version files, no
+              configuration files, just git tags
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">📝</div>
+            <h3>File Editing</h3>
+            <p>
+              Automatically update files with new versions (perfect for GitHub
+              Actions that reference Docker images). Optional push control for
+              advanced workflows.
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">💬</div>
+            <h3>Commit Commands</h3>
+            <p>
+              Include /major or /minor in commit messages to control version
+              bumps. No configuration needed, just commit and go.
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">📅</div>
+            <h3>Yearly Versioning</h3>
+            <p>
+              Use year as major version (2025.0.0 format). Automatically updates
+              to new year when incrementing minor version.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="journey-section">
+      <div class="container">
+        <h2 class="section-title">Version Journey</h2>
+        <p class="section-subtitle">
+          See how versions evolve through your development workflow
+        </p>
+
+        <div class="journey-flow">
+          <div class="journey-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-action">Push commit to dev branch</div>
+              <div class="step-result">
+                Increments patch: <span class="step-version">v1.3.4-dev</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-action">Create PR to dev branch</div>
+              <div class="step-result">
+                Creates transient preview tag:
+                <span class="step-version">v0.0.0-pr-42.1</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-action">Merge PR to dev branch</div>
+              <div class="step-result">
+                Increments patch: <span class="step-version">v1.3.5-dev</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-action">
+                Create PR from dev branch to main branch
+              </div>
+              <div class="step-result">
+                Creates transient RC tag:
+                <span class="step-version">v0.0.0-rc.1</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <div class="step-action">
+                Merge PR to main branch (production release)
+              </div>
+              <div class="step-result">
+                Strips suffix: <span class="step-version">v1.3.5</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-step">
+            <div class="step-number">6</div>
+            <div class="step-content">
+              <div class="step-action">
+                Next commit to dev branch (after production release)
+              </div>
+              <div class="step-result">
+                Bumps minor, resets patch:
+                <span class="step-version">v1.4.0-dev</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="journey-step">
+            <div class="step-number">7</div>
+            <div class="step-content">
+              <div class="step-action">
+                Direct commit to main branch (hotfix scenario)
+              </div>
+              <div class="step-result">
+                Increments patch from last production tag:
+                <span class="step-version">v1.3.6</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="usage-section">
+      <div class="container">
+        <h2 class="section-title">Usage</h2>
+        <p class="section-subtitle">
+          Add to your workflows - one action, all environments
+        </p>
+
+        <div class="workflow-examples">
+          <div class="workflow-example">
+            <h3>🌿 Dev Branch Workflow</h3>
+            <div class="code-block">
+              <span class="keyword">name:</span> Dev Deploy<br /><br />
+
+              <span class="keyword">on:</span><br />
+              &nbsp;&nbsp;<span class="keyword">push:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">branches:</span>
+              [dev]<br /><br />
+
+              <span class="keyword">jobs:</span><br />
+              &nbsp;&nbsp;<span class="keyword">deploy:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">runs-on:</span>
+              ubuntu-latest<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">permissions:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >contents:</span
+              >
+              write<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">steps:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- uses:</span
+              >
+              <span class="string">actions/checkout@v4</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >with:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >fetch-tags:</span
+              >
+              <span class="string">true</span><br /><br />
+
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- name:</span
+              >
+              Auto Version and Tag<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >uses:</span
+              >
+              <span class="string">starburst997/auto-version@v1</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >id:</span
+              >
+              version<br /><br />
+
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- name:</span
+              >
+              Deploy to Dev<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >run:</span
+              >
+              <span class="string"
+                >echo "Deploying ${{ steps.version.outputs.version }}"</span
+              >
+            </div>
+          </div>
+
+          <div class="workflow-example">
+            <h3>🔀 Pull Request Workflow</h3>
+            <div class="code-block">
+              <span class="keyword">name:</span> PR Deploy<br /><br />
+
+              <span class="keyword">on:</span><br />
+              &nbsp;&nbsp;<span class="keyword">pull_request:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">branches:</span>
+              [main, dev]<br /><br />
+
+              <span class="keyword">jobs:</span><br />
+              &nbsp;&nbsp;<span class="keyword">deploy:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">runs-on:</span>
+              ubuntu-latest<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">permissions:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >contents:</span
+              >
+              write<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">steps:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- uses:</span
+              >
+              <span class="string">actions/checkout@v4</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >with:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >fetch-tags:</span
+              >
+              <span class="string">true</span><br /><br />
+
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- name:</span
+              >
+              Auto Version and Tag<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >uses:</span
+              >
+              <span class="string">starburst997/auto-version@v1</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >id:</span
+              >
+              version<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="comment"
+                ># PR to main: v0.0.0-rc.1</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="comment"
+                ># PR to dev: v0.0.0-pr-42.1</span
+              ><br /><br />
+
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- name:</span
+              >
+              Deploy Preview<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >run:</span
+              >
+              <span class="string"
+                >echo "Deploying ${{ steps.version.outputs.version }}"</span
+              >
+            </div>
+          </div>
+
+          <div class="workflow-example">
+            <h3>🚀 Production Workflow</h3>
+            <div class="code-block">
+              <span class="keyword">name:</span> Production Deploy<br /><br />
+
+              <span class="keyword">on:</span><br />
+              &nbsp;&nbsp;<span class="keyword">push:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">branches:</span>
+              [main]<br /><br />
+
+              <span class="keyword">jobs:</span><br />
+              &nbsp;&nbsp;<span class="keyword">deploy:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">runs-on:</span>
+              ubuntu-latest<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">permissions:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >contents:</span
+              >
+              write<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">steps:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- uses:</span
+              >
+              <span class="string">actions/checkout@v4</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >with:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >fetch-tags:</span
+              >
+              <span class="string">true</span><br /><br />
+
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- name:</span
+              >
+              Auto Version and Tag<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >uses:</span
+              >
+              <span class="string">starburst997/auto-version@v1</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >id:</span
+              >
+              version<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >with:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >update-major-minor:</span
+              >
+              <span class="string">true</span>
+              <span class="comment"># Update v1, v1.2 tags</span><br /><br />
+
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- name:</span
+              >
+              Create Release<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >env:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >GH_TOKEN:</span
+              >
+              ${{ github.token }}<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >run:</span
+              >
+              |<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gh
+              release create ${{ steps.version.outputs.tag }} \<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--title
+              <span class="string"
+                >"Release ${{ steps.version.outputs.version }}"</span
+              >
+              \<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--generate-notes
+            </div>
+          </div>
+
+          <div class="workflow-example">
+            <h3>🏷️ GitHub Action with File Update</h3>
+            <div class="code-block">
+              <span class="keyword">name:</span> Release Action<br /><br />
+
+              <span class="keyword">on:</span><br />
+              &nbsp;&nbsp;<span class="keyword">push:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">branches:</span>
+              [main]<br /><br />
+
+              <span class="keyword">jobs:</span><br />
+              &nbsp;&nbsp;<span class="keyword">release:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">runs-on:</span>
+              ubuntu-latest<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">permissions:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >contents:</span
+              >
+              write<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">steps:</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- uses:</span
+              >
+              <span class="string">actions/checkout@v4</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >with:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >fetch-depth:</span
+              >
+              0<br /><br />
+
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- name:</span
+              >
+              Auto Version with File Update<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >uses:</span
+              >
+              <span class="string">starburst997/auto-version@v1</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >with:</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >update-major-minor:</span
+              >
+              <span class="string">true</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >edit-file:</span
+              >
+              <span class="string">"action.yml"</span><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >edit-commit-message:</span
+              >
+              <span class="string">"chore: update docker to {version}"</span
+              ><br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="comment"
+                ># Automatically updates action.yml with new version</span
+              ><br /><br />
+
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword"
+                >- name:</span
+              >
+              Build and Push Docker<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                class="keyword"
+                >run:</span
+              >
+              <span class="string"
+                >echo "Docker image will use correct version"</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reference-section">
+      <div class="container">
+        <h2 class="section-title">Reference</h2>
+        <p class="section-subtitle">
+          Complete inputs and outputs documentation
+        </p>
+
+        <div class="reference-grid">
+          <div class="reference-card">
+            <h3>📥 Inputs</h3>
+
+            <div class="param-item">
+              <div class="param-name">main-branch</div>
+              <div class="param-desc">Name of the main/production branch</div>
+              <div class="param-default">Default: main</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">dev-branch</div>
+              <div class="param-desc">Name of the development branch</div>
+              <div class="param-default">Default: dev</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">default-version</div>
+              <div class="param-desc">Starting version if no tags exist</div>
+              <div class="param-default">Default: 1.0.0</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">update-major-minor</div>
+              <div class="param-desc">
+                Update floating tags (v1, v1.2) to point to latest version
+              </div>
+              <div class="param-default">Default: false</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">yearly</div>
+              <div class="param-desc">
+                Use year as major version (e.g., 2025.0.0) and auto-update on
+                new year
+              </div>
+              <div class="param-default">Default: false</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">git-user-name</div>
+              <div class="param-desc">Git user name for tagging</div>
+              <div class="param-default">Default: github-actions[bot]</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">git-user-email</div>
+              <div class="param-desc">
+                Git user email for tagging and commits
+              </div>
+              <div class="param-default">
+                Default: github-actions[bot]@users.noreply.github.com
+              </div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">git-push</div>
+              <div class="param-desc">
+                Push changes and tags to remote repository
+              </div>
+              <div class="param-default">Default: true</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">no-tags</div>
+              <div class="param-desc">
+                Skip tag creation and pushing (only calculate version)
+              </div>
+              <div class="param-default">Default: false</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">edit-file</div>
+              <div class="param-desc">
+                File to update with new version (e.g., action.yml). If empty,
+                skipped
+              </div>
+              <div class="param-default">Default: (empty)</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">edit-search-pattern</div>
+              <div class="param-desc">
+                Search pattern for version replacement
+              </div>
+              <div class="param-default">
+                Default: ${{ github.repository }}:
+              </div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">edit-commit-message</div>
+              <div class="param-desc">
+                Commit message template for file edit (use {version}
+                placeholder)
+              </div>
+              <div class="param-default">
+                Default: chore: update version to {version}
+              </div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">update-version-files</div>
+              <div class="param-desc">
+                Automatically update version in common version files
+                (package.json, pyproject.toml, etc.) without committing
+              </div>
+              <div class="param-default">Default: true</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">version-file-paths</div>
+              <div class="param-desc">
+                Additional paths to search for version files (space or newline
+                separated). Useful for monorepos
+              </div>
+              <div class="param-default">Default: (empty)</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">patch-reset-value</div>
+              <div class="param-desc">
+                Value to reset PATCH to when incrementing MAJOR or MINOR
+              </div>
+              <div class="param-default">Default: 0</div>
+            </div>
+          </div>
+
+          <div class="reference-card">
+            <h3>📤 Outputs</h3>
+
+            <div class="param-item">
+              <div class="param-name">version</div>
+              <div class="param-desc">
+                Calculated version without 'v' prefix
+              </div>
+              <div class="param-default">Example: 1.2.3 or 1.2.3-dev</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">tag</div>
+              <div class="param-desc">Git tag with 'v' prefix</div>
+              <div class="param-default">Example: v1.2.3 or v1.2.3-dev</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">environment</div>
+              <div class="param-desc">Environment type</div>
+              <div class="param-default">
+                Example: production, dev, staging, or pr-42
+              </div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">suffix</div>
+              <div class="param-desc">
+                Version suffix (empty for production)
+              </div>
+              <div class="param-default">Example: dev, rc, pr-42, or empty</div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">future-version</div>
+              <div class="param-desc">
+                Actual semantic version for transient environments (RC/PR)
+                before 0.0.0
+              </div>
+              <div class="param-default">
+                Example: 1.2.3 (when version is 0.0.0-rc.1)
+              </div>
+            </div>
+
+            <div class="param-item">
+              <div class="param-name">stable-version</div>
+              <div class="param-desc">
+                Latest stable production version (without pre-release suffix)
+              </div>
+              <div class="param-default">Example: 1.2.3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>
+          <a href="https://github.com/starburst997/auto-version">GitHub</a> •
+          <a href="https://github.com/starburst997/auto-version/issues"
+            >Issues</a
+          >
+          •
+          <a href="https://github.com/starburst997/auto-version/releases"
+            >Releases</a
+          >
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
