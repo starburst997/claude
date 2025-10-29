@@ -83,17 +83,23 @@ For local plugin development or testing:
 
 ## Plugin Structure
 
-Each plugin follows this structure:
+Each plugin can include any combination of these features:
 
 ```
 plugin-name/
 ├── .claude-plugin/
 │   └── plugin.json         # Plugin metadata
-├── commands/               # Slash commands
+├── commands/               # Slash commands (user-invoked)
 │   └── *.md                # Command definitions
-├── hooks/                  # Hook scripts
+├── agents/                 # Specialized subagents
+│   └── *.md                # Agent definitions
+├── skills/                 # Model-invoked capabilities
+│   └── skill-name/
+│       └── SKILL.md        # Skill definition
+├── hooks/                  # Event handlers
 │   ├── hooks.json          # Hook configuration
 │   └── *.sh                # Hook executables
+├── .mcp.json               # MCP server configurations
 └── README.md               # Plugin documentation
 ```
 
@@ -101,8 +107,11 @@ plugin-name/
 
 After installing a plugin, its features become available in Claude Code:
 
-- **Hooks** run automatically (e.g., SessionStart)
-- **Commands** can be invoked with `/` prefix (e.g., `/common:readme`)
+- **Commands**: User-invoked slash commands (e.g., `/common:readme`)
+- **Agents**: Specialized subagents invoked automatically by Claude or explicitly by user
+- **Skills**: Model-invoked functions - Claude autonomously uses based on task context
+- **Hooks**: Event-driven automation that runs automatically (SessionStart, PreToolUse, etc.)
+- **MCP Servers**: External tool integration that starts automatically when plugin is enabled
 
 ## Marketplace
 
@@ -127,7 +136,7 @@ This repository is configured as a Claude Code plugin marketplace:
 
 1. Create a new directory in `plugins/`
 2. Add `.claude-plugin/plugin.json` with metadata
-3. Add hooks, commands, or context as needed
+3. Add hooks, commands, etc. as needed
 4. Document in plugin's README.md
 5. Register in `.claude-plugin/marketplace.json`
 
