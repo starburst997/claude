@@ -7,5 +7,5 @@
     "email": "jd@boiv.in"
   },
   "hooks": "./hooks/hooks.json",
-  "commands": ["./commands/hello.md"]
+  "commands": ["./commands/hello.md", "./commands/readme.md", "./commands/gh-pages.md"]
 }
