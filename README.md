@@ -14,12 +14,12 @@ Generic plugin useful for all types of projects. Automatically injects custom co
 
 **Hooks:**
 
-- `SessionStart` - Injects project guidelines from `context/instructions.md` or using `CONTEXT.md` (or `CONTEXT_ADD.md`) file in project's root
+- `SessionStart` - Injects project guidelines from `context/instructions.md` or (`CONTEXT.md` / `CONTEXT_ADD.md`)
 
 **Commands:**
 
 - `/common:readme [folder_path]` - Create/update professional README files
-- `/common:gh-pages [theme]` - Generate professional GitHub Pages (index.html) in docs/ (theme: dark or light, default: dark)
+- `/common:gh-pages [theme]` - Generate professional GitHub Pages in docs/ (theme: `dark` or `light`)
 - `/common:hello` - Personalized greeting command
 
 **Context Files:**
