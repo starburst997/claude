@@ -1,0 +1,28 @@
+{
+  "name": "jd",
+  "owner": {
+    "name": "JD Boivin",
+    "email": "jd@boiv.in",
+    "url": "https://github.com/starburst997"
+  },
+  "metadata": {
+    "description": "Plugins for Claude Code tailored for my needs",
+    "version": "1.0.0",
+    "homepage": "https://claude.jd.boiv.in",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "hello",
+      "source": "./plugins/hello",
+      "category": "jd",
+      "tags": ["hello"]
+    },
+    {
+      "name": "common",
+      "source": "./plugins/common",
+      "category": "jd",
+      "tags": ["common"]
+    }
+  ]
+}

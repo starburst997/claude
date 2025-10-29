@@ -1,0 +1,10 @@
+{
+  "name": "common",
+  "description": "Generic plugin useful for all types of projects",
+  "version": "1.0.0",
+  "author": {
+    "name": "JD Boivin",
+    "email": "jd@boiv.in"
+  },
+  "hooks": "./hooks/hooks.json"
+}
