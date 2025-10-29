@@ -1,1 +1,621 @@
-Claude!
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claude Code Plugins - JD's Marketplace</title>
+    <meta
+      name="description"
+      content="A curated collection of Claude Code plugins designed to extend functionality with custom commands, hooks, and automation for various project types."
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        color: #d0d0d9;
+        background: #0c1018;
+        min-height: 100vh;
+      }
+
+      .hero-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #0c1018 0%, #191923 100%);
+        z-index: -1;
+      }
+
+      .hero-accent {
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, #a68af520 0%, transparent 70%);
+        top: -300px;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header {
+        padding: 2rem 0;
+        text-align: center;
+      }
+
+      .hero {
+        padding: 4rem 0 6rem;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(to right, #a68af5, #61afff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .tagline {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        color: #96969d;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.875rem 2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+      }
+
+      .btn-primary {
+        background: #a68af5;
+        color: #0c1018;
+        border: 1px solid #a68af5;
+      }
+
+      .btn-primary:hover {
+        background: #b89fff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 30px rgba(166, 138, 245, 0.3);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: #d0d0d9;
+        border: 2px solid #3f3f3f;
+      }
+
+      .btn-secondary:hover {
+        background: #32373c;
+        border-color: #636669;
+      }
+
+      .features-section {
+        background: #141518;
+        border-top: 1px solid #3f3f3f;
+        border-bottom: 1px solid #3f3f3f;
+        padding: 5rem 0;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .feature {
+        text-align: center;
+        padding: 2rem;
+        background: #0c1018;
+        border: 1px solid #3f3f3f;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .feature:hover {
+        border-color: #a68af5;
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(166, 138, 245, 0.15);
+      }
+
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: #32373c;
+        border: 1px solid #3f3f3f;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 1.8rem;
+      }
+
+      .feature h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: #a68af5;
+      }
+
+      .feature p {
+        color: #96969d;
+        line-height: 1.7;
+        font-size: 0.95rem;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #d0d0d9;
+        margin-bottom: 1rem;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: #96969d;
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .installation-section {
+        padding: 4rem 0;
+        background: #0c1018;
+      }
+
+      .code-block {
+        background: #141518;
+        border: 1px solid #3f3f3f;
+        border-radius: 10px;
+        padding: 2rem;
+        margin: 2rem auto;
+        max-width: 800px;
+        overflow-x: auto;
+      }
+
+      .code-block pre {
+        font-family: "Monaco", "Courier New", monospace;
+        font-size: 0.9rem;
+        color: #d0d0d9;
+        line-height: 1.6;
+      }
+
+      .code-block code {
+        color: #98d280;
+      }
+
+      /* Syntax highlighting */
+      .cmd {
+        color: #61afff;
+      }
+
+      .string {
+        color: #98d280;
+      }
+
+      .comment {
+        color: #636669;
+        font-style: italic;
+      }
+
+      .keyword {
+        color: #a68af5;
+      }
+
+      .value {
+        color: #ffe169;
+      }
+
+      .json-key {
+        color: #61afff;
+      }
+
+      .json-string {
+        color: #98d280;
+      }
+
+      .json-value {
+        color: #ffe169;
+      }
+
+      .plugins-section {
+        background: #141518;
+        border-top: 1px solid #3f3f3f;
+        padding: 5rem 0;
+      }
+
+      .plugin-grid {
+        display: grid;
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .plugin-card {
+        background: #0c1018;
+        border: 1px solid #3f3f3f;
+        border-radius: 12px;
+        padding: 2.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .plugin-card:hover {
+        border-color: #a68af5;
+        box-shadow: 0 8px 30px rgba(166, 138, 245, 0.15);
+      }
+
+      .plugin-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #3f3f3f;
+      }
+
+      .plugin-name {
+        font-size: 1.8rem;
+        color: #a68af5;
+        font-weight: 700;
+      }
+
+      .plugin-id {
+        font-family: "Monaco", monospace;
+        font-size: 0.85rem;
+        background: #32373c;
+        color: #98d280;
+        padding: 0.3rem 0.7rem;
+        border-radius: 5px;
+      }
+
+      .plugin-desc {
+        color: #d0d0d9;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+
+      .plugin-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .feature-group {
+        background: #141518;
+        border: 1px solid #3f3f3f;
+        border-radius: 8px;
+        padding: 1.5rem;
+      }
+
+      .feature-group h4 {
+        font-size: 1rem;
+        color: #61afff;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .feature-list {
+        list-style: none;
+      }
+
+      .feature-list li {
+        padding: 0.5rem 0;
+        color: #96969d;
+        font-size: 0.9rem;
+      }
+
+      .feature-list li code {
+        font-family: "Monaco", monospace;
+        background: #32373c;
+        color: #98d280;
+        padding: 0.2rem 0.5rem;
+        border-radius: 3px;
+        font-size: 0.85rem;
+      }
+
+      .feature-list li strong {
+        color: #d0d0d9;
+      }
+
+      footer {
+        background: #0c1018;
+        padding: 3rem 0;
+        text-align: center;
+        color: #96969d;
+        border-top: 1px solid #3f3f3f;
+      }
+
+      footer a {
+        color: #a68af5;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      footer a:hover {
+        color: #61afff;
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        .tagline {
+          font-size: 1.2rem;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+        }
+
+        .plugin-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+
+        .plugin-features {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero-background">
+      <div class="hero-accent"></div>
+    </div>
+
+    <header>
+      <div class="container">
+        <nav>
+          <a
+            href="https://github.com/starburst997/claude"
+            class="btn btn-secondary"
+          >
+            View on GitHub &rarr;
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <h1>Claude Code Plugins</h1>
+        <p class="tagline">
+          Extend Claude Code with custom commands, hooks, and automation.
+          A curated marketplace of plugins tailored for modern development workflows.
+        </p>
+        <div class="cta-buttons">
+          <a
+            href="https://github.com/starburst997/claude"
+            class="btn btn-primary"
+          >
+            Get Started
+          </a>
+          <a
+            href="https://docs.claude.com/en/docs/claude-code/plugins"
+            class="btn btn-secondary"
+          >
+            Plugin Docs
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section">
+      <div class="container">
+        <h2 class="section-title">Why Use Plugins?</h2>
+        <p class="section-subtitle">
+          Enhance Claude Code with specialized functionality for your projects
+        </p>
+
+        <div class="features">
+          <div class="feature">
+            <div class="feature-icon">&#127919;</div>
+            <h3>Project Context</h3>
+            <p>
+              Automatically inject project-specific guidelines and instructions
+              at session start.
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">&#9889;</div>
+            <h3>Custom Commands</h3>
+            <p>
+              Create slash commands for repetitive tasks like generating READMEs
+              or documentation sites.
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">&#128260;</div>
+            <h3>Event Automation</h3>
+            <p>
+              Use hooks to automate workflows at key moments like SessionStart,
+              PreToolUse, and more.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="installation-section">
+      <div class="container">
+        <h2 class="section-title">Installation</h2>
+        <p class="section-subtitle">
+          Get started in two simple steps
+        </p>
+
+        <div class="code-block">
+          <pre><code><span class="comment"># Step 1: Add the marketplace</span>
+<span class="cmd">/plugin marketplace add</span> <span class="string">starburst997/claude</span>
+
+<span class="comment"># Step 2: Install a plugin</span>
+<span class="cmd">/plugin install</span> <span class="string">common@jd</span></code></pre>
+        </div>
+
+        <h3 style="text-align: center; color: #a68af5; margin-top: 3rem; margin-bottom: 1rem;">
+          Team Configuration
+        </h3>
+        <p style="text-align: center; color: #96969d; margin-bottom: 2rem;">
+          For team-wide plugin installation, add to your project's <code style="background: #32373c; color: #98d280; padding: 0.2rem 0.5rem; border-radius: 3px;">.claude/settings.json</code>
+        </p>
+
+        <div class="code-block">
+          <pre><code>{
+  <span class="json-key">"extraKnownMarketplaces"</span>: {
+    <span class="json-key">"jd"</span>: {
+      <span class="json-key">"source"</span>: {
+        <span class="json-key">"source"</span>: <span class="json-string">"github"</span>,
+        <span class="json-key">"repo"</span>: <span class="json-string">"starburst997/claude"</span>
+      }
+    }
+  },
+  <span class="json-key">"enabledPlugins"</span>: {
+    <span class="json-key">"common@jd"</span>: <span class="json-value">true</span>
+  }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="plugins-section">
+      <div class="container">
+        <h2 class="section-title">Available Plugins</h2>
+        <p class="section-subtitle">
+          Choose plugins that match your workflow
+        </p>
+
+        <div class="plugin-grid">
+          <div class="plugin-card">
+            <div class="plugin-header">
+              <div class="plugin-name">Common</div>
+              <div class="plugin-id">common@jd</div>
+            </div>
+            <div class="plugin-desc">
+              Generic plugin useful for all types of projects. Automatically
+              injects custom context and guidelines at session start, with helpful
+              commands for documentation generation.
+            </div>
+
+            <div class="plugin-features">
+              <div class="feature-group">
+                <h4>Commands</h4>
+                <ul class="feature-list">
+                  <li>
+                    <code>/common:readme</code> - Create/update professional README files with optional folder path argument
+                  </li>
+                  <li>
+                    <code>/common:gh-pages</code> - Generate professional GitHub Pages in docs/ (supports <strong>dark</strong> or <strong>light</strong> theme)
+                  </li>
+                  <li>
+                    <code>/common:hello</code> - Personalized greeting command
+                  </li>
+                </ul>
+              </div>
+
+              <div class="feature-group">
+                <h4>Hooks</h4>
+                <ul class="feature-list">
+                  <li>
+                    <strong>SessionStart</strong> - Injects project guidelines from <code>context/instructions.md</code> or <code>CONTEXT.md</code> / <code>CONTEXT_ADD.md</code> in project root
+                  </li>
+                </ul>
+              </div>
+
+              <div class="feature-group">
+                <h4>Context Files</h4>
+                <ul class="feature-list">
+                  <li>
+                    <code>context/instructions.md</code> - Customizable project guidelines and instructions
+                  </li>
+                  <li>
+                    <code>CONTEXT.md</code> - Alternative context file location (project root)
+                  </li>
+                  <li>
+                    <code>CONTEXT_ADD.md</code> - Additional context (project root)
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="plugin-card" style="opacity: 0.7;">
+            <div class="plugin-header">
+              <div class="plugin-name">Next.js</div>
+              <div class="plugin-id">nextjs@jd</div>
+            </div>
+            <div class="plugin-desc">
+              <strong style="color: #ffe169;">Coming Soon</strong> - Next.js specific optimizations and guidelines for React Server Components, App Router, and modern Next.js patterns.
+            </div>
+          </div>
+
+          <div class="plugin-card" style="opacity: 0.7;">
+            <div class="plugin-header">
+              <div class="plugin-name">TypeScript</div>
+              <div class="plugin-id">typescript@jd</div>
+            </div>
+            <div class="plugin-desc">
+              <strong style="color: #ffe169;">Coming Soon</strong> - TypeScript development enhancements with type checking helpers and best practices.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>
+          <a href="https://github.com/starburst997/claude">GitHub</a>
+          &bull;
+          <a href="https://github.com/starburst997/claude/issues">Issues</a>
+          &bull;
+          <a href="https://docs.claude.com/en/docs/claude-code">Claude Code Docs</a>
+          &bull;
+          <a href="https://docs.claude.com/en/docs/claude-code/plugins">Plugin Development</a>
+        </p>
+        <p style="margin-top: 1rem; color: #636669">
+          Made by JD Boivin &bull; Marketplace ID: <code style="background: #32373c; color: #98d280; padding: 0.2rem 0.5rem; border-radius: 3px;">jd</code>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

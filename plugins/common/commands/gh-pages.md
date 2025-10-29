@@ -133,3 +133,33 @@ If the `docs/` directory doesn't exist, create it first.
 - **The project name/title MUST use a gradient effect** - this is non-negotiable
 - Adapt the structure to fit the project - not every project needs usage examples or reference docs
 - Use theme files as inspiration for style, not as rigid templates to copy exactly
+
+## Encoding Guidelines
+
+**CRITICAL**: To prevent encoding issues in generated HTML files:
+
+1. **Use HTML entities for special characters**:
+   - For emojis in HTML: Use decimal HTML entities (e.g., `&#127919;` for 🎯, `&#9889;` for ⚡, `&#128260;` for 🔔)
+   - For bullet separators: Use `&bull;` instead of the • character
+   - For arrows: Use `&rarr;` for → and `&larr;` for ←
+   - For other special symbols: Use HTML entity equivalents
+
+2. **Always include proper charset**:
+   - Ensure `<meta charset="UTF-8" />` is in the `<head>` section
+
+3. **Common HTML entities to use**:
+   - `&bull;` for bullet points (•)
+   - `&rarr;` for right arrow (→)
+   - `&larr;` for left arrow (←)
+   - `&mdash;` for em dash (—)
+   - `&ndash;` for en dash (–)
+   - `&hellip;` for ellipsis (…)
+   - `&copy;` for copyright (©)
+   - `&trade;` for trademark (™)
+
+4. **For emojis**: Convert to decimal HTML entities using the Unicode code point
+   - Find emoji code point (e.g., U+1F3AF for 🎯)
+   - Convert to decimal: `&#127919;`
+   - Or use hex format: `&#x1F3AF;`
+
+This ensures the HTML file displays correctly across all systems and browsers without encoding corruption.
