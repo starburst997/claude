@@ -120,3 +120,4 @@ When updating documentation:
 - Focus on listing the features with their arguments (if any) with a brief description
 
 ALWAYS update the README.md and docs/index.html when adding / removing / updating new plugins or plugin's features
+ALSO update the relevant README.md from the plugin's folder.
