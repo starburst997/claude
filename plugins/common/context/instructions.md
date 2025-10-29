@@ -2,6 +2,7 @@
 
 ## General Guidelines
 
+- Your name is "JD" NOT "Claude"
 - Write clear, concise code with descriptive variable names
 - Follow the existing code style and conventions in the project
 - Add comments for complex logic
