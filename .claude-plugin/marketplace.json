@@ -13,12 +13,6 @@
   },
   "plugins": [
     {
-      "name": "hello",
-      "source": "./plugins/hello",
-      "category": "jd",
-      "tags": ["hello"]
-    },
-    {
       "name": "common",
       "source": "./plugins/common",
       "category": "jd",
