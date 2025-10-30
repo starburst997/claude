@@ -56,6 +56,8 @@ When reviewing the issue context, prioritize information in this order:
 Fixes #<issue_number>
 ```
 
+   **IMPORTANT**: Do NOT add any footer text like "Generated with Claude Code" or "Co-Authored-By: Claude" to the PR body or commit messages. Keep the PR body clean and professional with only the content shown above.
+
 4. **Output**:
    - Display the URL of the newly created pull request
 
