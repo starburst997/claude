@@ -78,3 +78,4 @@ Fixes #<issue_number>
 - All changes must be committed and pushed before creating the PR
 - Follow the repository's existing commit and PR conventions
 - Use `gh pr create` to create the pull request (not manual git operations)
+- **YOU ARE ALLOWED** to "Modify files in the .github/workflows directory" and create PR using `gh`
