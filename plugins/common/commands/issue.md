@@ -17,14 +17,16 @@ Transform the current GitHub issue into a pull request. This command is designed
 When reviewing the issue context, prioritize information in this order:
 
 1. **First comment (issue description)** - This is the PRIMARY requirement and most important source of truth
-2. **Follow-up comments from the same author** - High priority, often contains clarifications or additional requirements
-3. **Comments from other users** - Lower priority but still useful for additional context and edge cases
+2. **Comments from the repository owner** - Highest priority as they have final authority on requirements and direction
+3. **Follow-up comments from the issue author** - High priority, often contains clarifications or additional requirements
+4. **Comments from other users** - Lower priority but still useful for additional context and edge cases
 
 ## Process
 
 1. **Understand the requirements**:
 
    - Focus primarily on the first comment (issue description) as the main request
+   - Give highest priority to comments from the repository owner
    - Review follow-up comments from the issue author for clarifications
    - Consider comments from other users as supplementary context
    - Identify what needs to be fixed or implemented
