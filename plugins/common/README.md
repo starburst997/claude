@@ -12,6 +12,7 @@ Generic plugin useful for all types of projects. Automatically injects custom co
 
 - `/common:readme [folder_path]` - Create/update professional README files
 - `/common:gh-pages [theme]` - Generate professional GitHub Pages (index.html) in docs/ (theme: dark or light, default: dark)
+- `/common:issue` - Create a PR to fix the current GitHub issue (designed for use with claude-code-action)
 - `/common:hello` - Personalized greeting command
 
 ## How It Works
