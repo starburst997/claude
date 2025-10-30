@@ -56,7 +56,7 @@ When reviewing the issue context, prioritize information in this order:
 Fixes #<issue_number>
 ```
 
-   **IMPORTANT**: Do NOT add any footer text like "Generated with Claude Code" or "Co-Authored-By: Claude" to the PR body or commit messages. Keep the PR body clean and professional with only the content shown above.
+**IMPORTANT**: Do NOT add any footer text like "Generated with Claude Code" or "Co-Authored-By: Claude" to the PR body or commit messages. Keep the PR body clean and professional with only the content shown above.
 
 4. **Output**:
    - Display the URL of the newly created pull request
@@ -69,9 +69,10 @@ Fixes #<issue_number>
 
 ## Important Notes
 
+- **CRITICAL**: You MUST create the pull request using `gh pr create` command - this is a mandatory step that cannot be skipped or deferred
 - The PR body **must** include `Fixes #<issue_number>` to auto-link and auto-close the issue
 - Changes should fully address all requirements mentioned in the issue
 - The PR summary should be concise but informative (1-2 sentences)
-- All changes must be committed before creating the PR
+- All changes must be committed and pushed before creating the PR
 - Follow the repository's existing commit and PR conventions
 - Use `gh pr create` to create the pull request (not manual git operations)
