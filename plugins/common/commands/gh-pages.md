@@ -19,10 +19,12 @@ Create a professional `index.html` file in the `docs/` directory that serves dua
 
 ## Theme Inspiration
 
-You have access to two theme examples in the plugin context directory for **inspiration**:
+You have access to two theme example files in **this plugin's context directory** for **inspiration**:
 
-- **dark.html**: Modern dark theme with gradient accents (default)
-- **light.html**: Clean light theme with purple gradient
+- **plugins/common/context/dark.html**: Modern dark theme with gradient accents (default)
+- **plugins/common/context/light.html**: Clean light theme with purple gradient
+
+**Path Note**: These files are part of the `common` plugin, NOT the user's project. They are located in the installed plugin directory at `plugins/common/context/`.
 
 **Important**: These are inspiration sources, not strict templates. Use them to guide the visual style, color palette, and overall aesthetic, but adapt the structure and content to fit the specific project. The goal is to create something that feels similar in style while being tailored to the project's needs.
 
@@ -92,7 +94,7 @@ The `theme` argument determines which example to use as inspiration (defaults to
    - Understand the target audience and use cases
 
 2. **Select and study the theme**:
-   - Load the appropriate inspiration file (dark.html or light.html) from context
+   - Load the appropriate inspiration file from `plugins/common/context/` (either dark.html or light.html based on the theme argument)
    - Extract color schemes, typography, component patterns as guidance
    - Note the syntax highlighting approach
    - Use as inspiration, not as a strict template to copy
