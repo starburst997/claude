@@ -72,6 +72,7 @@ Fixes #<issue_number>
 ## Important Notes
 
 - **CRITICAL**: You MUST create the pull request using `gh pr create` command - this is a mandatory step that cannot be skipped or deferred
+- **CRITICAL**: The branch name **must** be `jd/issue-####/<brief-title-of-the-pr>`, if branch already exists, append an incremental number, ex: `-#` to make it unique
 - The PR body **must** include `Fixes #<issue_number>` to auto-link and auto-close the issue
 - Changes should fully address all requirements mentioned in the issue
 - The PR summary should be concise but informative (1-2 sentences)
